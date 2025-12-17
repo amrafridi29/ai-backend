@@ -13,19 +13,19 @@ import {
 export const mastra = new Mastra({
   agents: { weatherAgent },
   workflows: { nameFormattingWorkflow },
-  observability: {
-    configs: {
-      default: {
-        serviceName: 'mastra',
-        sampling: { type: SamplingStrategyType.ALWAYS },
-        processors: [new SensitiveDataFilter()],
-        exporters: [new CloudExporter(), new DefaultExporter()],
-      },
-    },
-  },
+  // observability: {
+  //   configs: {
+  //     default: {
+  //       serviceName: 'mastra',
+  //       sampling: { type: SamplingStrategyType.ALWAYS },
+  //       processors: [new SensitiveDataFilter()],
+  //       exporters: [new CloudExporter(), new DefaultExporter()],
+  //     },
+  //   },
+  // },
 
-  storage: new LibSQLStore({
-    url: 'file:./mastra.db', // Storage is required for tracing
-  }),
+  // storage: new LibSQLStore({
+  //   url: 'file:./mastra.db', // Storage is required for tracing
+  // }),
   logger: new PinoLogger({ name: 'Mastra', level: 'info' }),
 });

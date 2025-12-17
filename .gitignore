@@ -3,6 +3,11 @@
 /node_modules
 /build
 
+.mastra
+.mastra.db
+mastra.db-shm
+mastra.db-wal
+
 # Logs
 logs
 *.log
