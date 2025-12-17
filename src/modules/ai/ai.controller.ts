@@ -9,4 +9,9 @@ export class AiController {
   async getWeather(@Query('location') location: string) {
     return this.aiService.getWeather(location);
   }
+
+  @Get('format-name')
+  async formatName(@Query('name') name: string) {
+    return this.aiService.formatName(name);
+  }
 }

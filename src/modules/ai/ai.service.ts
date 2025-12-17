@@ -26,4 +26,15 @@ export class AiService {
       throw error;
     }
   }
+
+  async formatName(name: string) {
+    const workflow = this.mastra.getWorkflow('nameFormattingWorkflow');
+    const run = await workflow.createRunAsync();
+    const result = await run.start({
+      inputData: {
+        name: name,
+      },
+    });
+    return result;
+  }
 }
