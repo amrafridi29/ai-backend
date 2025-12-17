@@ -10,10 +10,17 @@ export const weatherTool = createTool({
   outputSchema: z.object({
     weather: z.string(),
   }),
-  execute: async ({ context }) => {
+  execute: async ({ context }, { abortSignal }) => {
     const { location } = context;
 
-    const response = await fetch(`https://wttr.in/${location}?format=3`);
+    const response = await fetch(`https://wttr.in/${location}?format=3`, {
+      signal: abortSignal,
+    });
+
+    if (abortSignal?.aborted) {
+      throw new Error('Aborted');
+    }
+
     const weather = await response.text();
 
     console.log(response);

@@ -8,10 +8,22 @@ export class AiService {
   constructor(@Inject(MASTRA_TOKEN) private readonly mastra: Mastra) {}
 
   async getWeather(location: string) {
-    const weatherAgent = this.mastra.getAgent('weatherAgent');
-    const weather = await weatherAgent.generate(
-      `Get the weather for ${location}`,
-    );
-    return weather;
+    const controller = new AbortController();
+
+    try {
+      const weatherAgent = this.mastra.getAgent('weatherAgent');
+      const weather = await weatherAgent.generate(
+        `Get the weather for ${location}`,
+        {
+          abortSignal: controller.signal,
+        },
+      );
+      return weather;
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        throw new Error('Agent generation was aborted.');
+      }
+      throw error;
+    }
   }
 }
