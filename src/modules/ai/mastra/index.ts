@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import { Mastra } from '@mastra/core/mastra';
 import { weatherAgent } from './agents/weather-agent';
 import { nameFormattingWorkflow } from './workflows/name-formatting-workflow';
@@ -9,6 +11,9 @@ import {
   SamplingStrategyType,
   SensitiveDataFilter,
 } from '@mastra/core/ai-tracing';
+import { PostgresStore } from '@mastra/pg';
+
+const DATABASE_URL = `postgresql://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
 export const mastra = new Mastra({
   agents: { weatherAgent },
@@ -24,8 +29,11 @@ export const mastra = new Mastra({
   //   },
   // },
 
-  storage: new LibSQLStore({
-    url: 'file:./mastra.db', // Storage is required for tracing
+  // storage: new LibSQLStore({
+  //   url: 'file:./mastra.db', // Storage is required for tracing
+  // }),
+  storage: new PostgresStore({
+    connectionString: DATABASE_URL,
   }),
   logger: new PinoLogger({ name: 'Mastra', level: 'info' }),
 });
