@@ -15,7 +15,7 @@ export const mastra = new Mastra({
   workflows: { nameFormattingWorkflow },
   // observability: {
   //   configs: {
-  //     default: {
+  //     dev: {
   //       serviceName: 'mastra',
   //       sampling: { type: SamplingStrategyType.ALWAYS },
   //       processors: [new SensitiveDataFilter()],
@@ -24,8 +24,8 @@ export const mastra = new Mastra({
   //   },
   // },
 
-  // storage: new LibSQLStore({
-  //   url: 'file:./mastra.db', // Storage is required for tracing
-  // }),
+  storage: new LibSQLStore({
+    url: 'file:./mastra.db', // Storage is required for tracing
+  }),
   logger: new PinoLogger({ name: 'Mastra', level: 'info' }),
 });

@@ -7,11 +7,20 @@ export const uppercaseStep = createStep({
   inputSchema: z.object({
     name: z.string().describe('The name of the person'),
   }),
+  resumeSchema: z.object({
+    approved: z.boolean(),
+  }),
   outputSchema: z.object({
     formattedName: z.string().describe('The uppercase name of the person'),
   }),
-  execute: async ({ inputData, mastra }) => {
+  execute: async ({ inputData, mastra, resumeData, suspend }) => {
     const { name } = inputData;
+    const { approved } = resumeData ?? {};
+
+    if (!approved) {
+      return await suspend({});
+    }
+
     mastra.getLogger().info('Uppercasing name', { name });
     return { formattedName: name.toUpperCase() };
   },
