@@ -18,13 +18,14 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "start:mastra": "mastra dev"
+    "start:mastra": "rm -rf .mastra && mastra dev"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.88",
     "@mastra/core": "^0.24.8",
     "@mastra/libsql": "^0.16.4",
     "@mastra/loggers": "^0.10.19",
+    "@mastra/memory": "^0.15.13",
     "@mastra/pg": "^0.17.10",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
