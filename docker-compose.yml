@@ -2,7 +2,7 @@
 services:
   postgres:
     container_name: postgres_db
-    image: postgres:16
+    image: pgvector/pgvector:pg16  # PostgreSQL 16 with pgvector extension
     ports:
       - "5432:5432"
     env_file:
